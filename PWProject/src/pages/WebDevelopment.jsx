@@ -158,14 +158,13 @@ const plans = [
   {
     name: "Batch",
     label: "Best Value",
-    price: "₹6700",
-    originalPrice: "₹9000",
-    discount: "25% OFF",
+    price: "₹5500",
+   
     features: {
       support: true,
       notes: true,
-      upcoming: false,
-      khazana: false,
+      upcoming: true,
+      khazana: true,
       uday: false,
       testPass: false,
       infinitePractice: false,
@@ -176,9 +175,8 @@ const plans = [
   {
     name: "Infinity",
     label: "Recommended",
-    price: "₹6700",
-    originalPrice: "₹9000",
-    discount: "25% OFF",
+    price: "₹10500",
+   
     features: {
       support: true,
       notes: true,
@@ -194,9 +192,8 @@ const plans = [
   {
     name: "Infinity Pro",
     label: "",
-    price: "₹6700",
-    originalPrice: "₹9000",
-    discount: "25% OFF",
+    price: "₹18500",
+  
     features: {
       support: true,
       notes: true,
@@ -211,19 +208,20 @@ const plans = [
   },
 ];
 
+
 const featureList = [
   { key: "support", label: "24*7 Doubt Support" },
   { key: "notes", label: "Class notes & Handwritten Notes" },
   { key: "upcoming", label: "Free access of all upcoming versions" },
-  { key: "khazana", label: "Khazana (Access to 7000+ videos)" },
-  { key: "uday", label: "Uday 2026 Batch" },
-  {
-    key: "testPass",
-    label: "Test Pass (Chapterwise, PYQ & all Practice Tests)",
-  },
-  { key: "infinitePractice", label: "Infinite Practice" },
-  { key: "preparationMeter", label: "Preparation Meter" },
-  { key: "pitara", label: "Pitara" },
+  { key: "khazana", label: "communication" },
+  { key: "uday", label: "Enterview calls" },
+  // {
+  //   key: "testPass",
+  //   label: "Test Pass (Chapterwise, PYQ & all Practice Tests)",
+  // },
+  // { key: "infinitePractice", label: "Infinite Practice" },
+  // { key: "preparationMeter", label: "Preparation Meter" },
+  { key: "pitara", label: "Placement Guarantee" },
 ];
 
 const WebDevelopment = () => {
@@ -547,19 +545,6 @@ const WebDevelopment = () => {
                         }}
                       >
                         {plans[selectedPlan].originalPrice}
-                      </span>
-                      <span
-                        style={{
-                          background: "#a3e635",
-                          color: "#222",
-                          borderRadius: 4,
-                          padding: "2px 8px",
-                          marginLeft: 10,
-                          fontWeight: "bold",
-                          fontSize: 15,
-                        }}
-                      >
-                        {plans[selectedPlan].discount}
                       </span>
                     </div>
                     <div style={{ display: "flex", gap: 16 }}>
