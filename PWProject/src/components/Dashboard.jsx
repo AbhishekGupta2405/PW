@@ -26,6 +26,8 @@ const Dashboard = () => {
     statsCard3: false
   });
 
+ 
+
   // Animation trigger on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -840,12 +842,240 @@ const Dashboard = () => {
      
      @keyframes marquee {
        0% {
-         transform: translateX(100%);
+         transform: translateX(0);
        }
        100% {
-         transform: translateX(-100%);
+         transform: translateX(-50%);
        }
      }
+
+    /* Course section modern grid and card styles */
+    .course-modern-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (min-width: 900px) {
+      .course-modern-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1040px;
+      }
+    }
+
+    .course-modern-card {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(95,56,233,0.05);
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+      border: 1px solid #eee;
+      transition: box-shadow 0.18s, transform 0.18s, border 0.18s;
+      height: 180px;
+    }
+
+    .course-modern-card:hover {
+      box-shadow: 0 6px 20px rgba(95,56,233,0.13);
+      transform: translateY(-3px) scale(1.012);
+      border: 1px solid #d1c4e9;
+    }
+
+    .course-modern-content {
+      flex: 1 1 60%;
+      padding: 18px 10px 12px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+
+    .course-modern-title {
+      font-size: 1.18rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #181818;
+      letter-spacing: 0.2px;
+      text-align: left;
+      line-height: 1.1;
+    }
+
+    .course-modern-tags {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(80px, 1fr));
+      gap: 8px 10px;
+      margin-bottom: 16px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .course-modern-tag {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 24px;
+      padding: 7px 16px;
+      font-size: 0.98rem;
+      color: #222;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(95,56,233,0.02);
+      text-align: center;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .course-modern-explore-row {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .course-modern-explore-btn {
+      background: #fafafa;
+      border: none;
+      border-radius: 24px;
+      padding: 7px 18px 7px 14px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #181818;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 1px 2px rgba(95,56,233,0.02);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .course-modern-explore-btn:hover {
+      background: #ede7f6;
+    }
+
+    .course-modern-arrow {
+      font-size: 1.1rem;
+      margin-left: 1px;
+    }
+
+    .course-modern-visual {
+      flex: 1 1 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-width: 70px;
+      min-height: 100%;
+    }
+
+    .course-modern-halfcircle {
+      position: absolute;
+      right: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 140px;
+      height: 140px;
+      border-top-right-radius: 140px;
+      border-bottom-right-radius: 140px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      z-index: 1;
+      opacity: 0.18;
+      background: #ffebee;
+    }
+
+    .course-modern-card.mern .course-modern-halfcircle { background: #ffebee; }
+    .course-modern-card.python .course-modern-halfcircle { background: #fff8e1; }
+    .course-modern-card.java .course-modern-halfcircle { background: #fffde7; }
+    .course-modern-card.frontend .course-modern-halfcircle { background: #e3f2fd; }
+    .course-modern-card.cpp .course-modern-halfcircle { background: #ede7f6; }
+
+    .course-modern-sticker {
+      position: relative;
+      z-index: 2;
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(95,56,233,0.08));
+    }
+
+    /* Course title row with sticker */
+    .course-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+      position: relative;
+    }
+
+    .course-title-row .course-title-text {
+      font-size: 1.45rem;
+      font-weight: bold;
+      color: #181818;
+      letter-spacing: 0.5px;
+      text-align: left;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .course-title-row .course-sticker-inline {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin-left: 0;
+      margin-bottom: 0;
+      vertical-align: middle;
+      z-index: 2;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), filter 0.3s;
+    }
+
+    .courses-animate-card:hover .course-title-row .course-sticker-inline {
+      transform: scale(1.18);
+      filter: drop-shadow(0 0 12px #a1c4fd) drop-shadow(0 2px 8px rgba(95,56,233,0.18));
+    }
+
+    /* Hover effects for course cards */
+    .courses-animate-card:hover {
+      border: 1.5px solid #000 !important;
+    }
+
+    .courses-animate-card.stagger-1:hover {
+      background: #fff6f7;
+      box-shadow: 0 8px 32px #ffebee99, 0 2px 12px rgba(95,56,233,0.10);
+      transform: translateY(-8px) scale(1.03);
+      border: 1.5px solid #000;
+    }
+
+    .courses-animate-card.stagger-2:hover {
+      background: #fffef7;
+      box-shadow: 0 8px 32px #fff8e199, 0 2px 12px rgba(95,56,233,0.10);
+      transform: translateY(-8px) scale(1.03);
+      border: 1.5px solid #000;
+    }
+
+    .courses-animate-card.stagger-3:hover {
+      background: #fffcf2;
+      box-shadow: 0 8px 32px #fffde799, 0 2px 12px rgba(95,56,233,0.10);
+      transform: translateY(-8px) scale(1.03);
+      border: 1.5px solid #000;
+    }
+
+    .courses-animate-card.stagger-4:hover {
+      background: #f7faff;
+      box-shadow: 0 8px 32px #e3f2fd99, 0 2px 12px rgba(95,56,233,0.10);
+      transform: translateY(-8px) scale(1.03);
+      border: 1.5px solid #000;
+    }
+
+    .courses-animate-card.stagger-5:hover {
+      background: #f8f6ff;
+      box-shadow: 0 8px 32px #ede7f699, 0 2px 12px rgba(95,56,233,0.10);
+      transform: translateY(-8px) scale(1.03);
+      border: 1.5px solid #000;
+    }
   `;
 
   return (
@@ -945,125 +1175,188 @@ const Dashboard = () => {
         </p>
         <div style={styles.categoryGrid}>
           <div 
+            className="courses-animate-card stagger-1 course-modern-card mern"
             style={styles.category} 
             onClick={redirectToLogin}
             onMouseEnter={() => setIsHovered(prev => ({ ...prev, category1: true }))}
             onMouseLeave={() => setIsHovered(prev => ({ ...prev, category1: false }))}
           >
-            <div>
-              <h3 style={styles.categoryTitle}>MERN FULL STACK</h3>
-              <div style={styles.tags}>
-                <span style={styles.tag}>Html</span>
-                <span style={styles.tag}>Css</span>
-                <span style={styles.tag}>Js</span>
-                <span style={styles.tag}>React</span>
-                <span style={styles.tag}>Tailwind</span>
-                <span style={styles.tag}>Node.js</span>
-                <span style={styles.tag}>Express.js</span>
-                <span style={styles.tag}>Ai integartion</span>
-                <span style={styles.tag}>DSA</span>
-                <span style={styles.tag}>Communication Skills</span>
-                <span style={styles.tag}>Aptitude</span>
-                <span style={styles.tag}>Reasoning</span>
-                <span style={styles.tag}>100+Interview Question</span>
-                <span style={styles.tag}>Live Project</span>
+            <div className="course-modern-content">
+              <div className="course-title-row">
+                <span className="course-title-text">MERN FULL STACK</span>
+                <img className="course-sticker-inline" src="mern.jpg" alt="MERN" />
               </div>
-              <img src="mern.jpg" alt="" style={styles.categoryImage} />
+              <div className="course-modern-tags">
+                <span className="course-modern-tag">Html</span>
+                <span className="course-modern-tag">Css</span>
+                <span className="course-modern-tag">Js</span>
+                <span className="course-modern-tag">React</span>
+                <span className="course-modern-tag">Tailwind</span>
+                <span className="course-modern-tag">Node.js</span>
+                <span className="course-modern-tag">Express.js</span>
+                <span className="course-modern-tag">Ai integartion</span>
+                <span className="course-modern-tag">DSA</span>
+                <span className="course-modern-tag">Communication Skills</span>
+                <span className="course-modern-tag">Aptitude</span>
+                <span className="course-modern-tag">Reasoning</span>
+                <span className="course-modern-tag">100+Interview Question</span>
+                <span className="course-modern-tag">Live Project</span>
+              </div>
+              <div className="course-modern-explore-row">
+                <button className="course-modern-explore-btn">
+                  Explore Category <span className="course-modern-arrow">→</span>
+                </button>
+              </div>
             </div>
-            <button style={styles.categoryButton}>Explore Category →</button>
+            <div className="course-modern-visual">
+              <div className="course-modern-halfcircle"></div>
+              <img className="course-modern-sticker" src="mern.jpg" alt="MERN" />
+            </div>
           </div>
+          
           <div 
+            className="courses-animate-card stagger-2 course-modern-card python"
             style={styles.category} 
             onClick={redirectToLogin}
             onMouseEnter={() => setIsHovered(prev => ({ ...prev, category2: true }))}
             onMouseLeave={() => setIsHovered(prev => ({ ...prev, category2: false }))}
           >
-            <div>
-              <h3 style={styles.categoryTitle}>Python Full Stack</h3>
-              <div style={styles.tags}>
-                <span style={styles.tag}>Html</span>
-                <span style={styles.tag}>Css</span>
-                <span style={styles.tag}>Js</span>
-                <span style={styles.tag}>React</span>
-                <span style={styles.tag}>Tailwind</span>
-                <span style={styles.tag}>python</span>
-                <span style={styles.tag}>Flask</span>
-                <span style={styles.tag}>Ai integartion</span>
-                <span style={styles.tag}>DSA</span>
-                <span style={styles.tag}>Communication Skills</span>
-                <span style={styles.tag}>Aptitude</span>
-                <span style={styles.tag}>Reasoning</span>
-                <span style={styles.tag}>100+Interview Question</span>
-                <span style={styles.tag}>Live Project</span>
+            <div className="course-modern-content">
+              <div className="course-title-row">
+                <span className="course-title-text">Python Full Stack</span>
+                <img className="course-sticker-inline" src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python" />
+              </div>
+              <div className="course-modern-tags">
+                <span className="course-modern-tag">Html</span>
+                <span className="course-modern-tag">Css</span>
+                <span className="course-modern-tag">Js</span>
+                <span className="course-modern-tag">React</span>
+                <span className="course-modern-tag">Tailwind</span>
+                <span className="course-modern-tag">python</span>
+                <span className="course-modern-tag">Flask</span>
+                <span className="course-modern-tag">Ai integartion</span>
+                <span className="course-modern-tag">DSA</span>
+                <span className="course-modern-tag">Communication Skills</span>
+                <span className="course-modern-tag">Aptitude</span>
+                <span className="course-modern-tag">Reasoning</span>
+                <span className="course-modern-tag">100+Interview Question</span>
+                <span className="course-modern-tag">Live Project</span>
+              </div>
+              <div className="course-modern-explore-row">
+                <button className="course-modern-explore-btn">
+                  Explore Category <span className="course-modern-arrow">→</span>
+                </button>
               </div>
             </div>
-            <button style={styles.categoryButton}>Explore Category →</button>
+            <div className="course-modern-visual">
+              <div className="course-modern-halfcircle"></div>
+              <img className="course-modern-sticker" src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python" />
+            </div>
           </div>
+          
           <div 
+            className="courses-animate-card stagger-3 course-modern-card java"
             style={styles.category} 
             onClick={redirectToLogin}
             onMouseEnter={() => setIsHovered(prev => ({ ...prev, category3: true }))}
             onMouseLeave={() => setIsHovered(prev => ({ ...prev, category3: false }))}
           >
-            <div>
-              <h3 style={styles.categoryTitle}>Java Full Stack</h3>
-              <div style={styles.tags}>
-                <span style={styles.tag}>Html</span>
-                <span style={styles.tag}>Css</span>
-                <span style={styles.tag}>Js</span>
-                <span style={styles.tag}>React</span>
-                <span style={styles.tag}>Tailwind</span>
-                <span style={styles.tag}>Java</span>
-                <span style={styles.tag}>Spring Boot</span>
-                <span style={styles.tag}>Ai integartion</span>
-                <span style={styles.tag}>DSA</span>
-                <span style={styles.tag}>Communication Skills</span>
-                <span style={styles.tag}>Aptitude</span>
-                <span style={styles.tag}>Reasoning</span>
-                <span style={styles.tag}>100+Interview Question</span>
-                <span style={styles.tag}>Live Project</span>
+            <div className="course-modern-content">
+              <div className="course-title-row">
+                <span className="course-title-text">Java Full Stack</span>
+                <img className="course-sticker-inline" src="https://cdn-icons-png.flaticon.com/512/5968/5968282.png" alt="Java" />
+              </div>
+              <div className="course-modern-tags">
+                <span className="course-modern-tag">Html</span>
+                <span className="course-modern-tag">Css</span>
+                <span className="course-modern-tag">Js</span>
+                <span className="course-modern-tag">React</span>
+                <span className="course-modern-tag">Tailwind</span>
+                <span className="course-modern-tag">Java</span>
+                <span className="course-modern-tag">Spring Boot</span>
+                <span className="course-modern-tag">Ai integartion</span>
+                <span className="course-modern-tag">DSA</span>
+                <span className="course-modern-tag">Communication Skills</span>
+                <span className="course-modern-tag">Aptitude</span>
+                <span className="course-modern-tag">Reasoning</span>
+                <span className="course-modern-tag">100+Interview Question</span>
+                <span className="course-modern-tag">Live Project</span>
+              </div>
+              <div className="course-modern-explore-row">
+                <button className="course-modern-explore-btn">
+                  Explore Category <span className="course-modern-arrow">→</span>
+                </button>
               </div>
             </div>
-            <button style={styles.categoryButton}>Explore Category →</button>
+            <div className="course-modern-visual">
+              <div className="course-modern-halfcircle"></div>
+              <img className="course-modern-sticker" src="https://cdn-icons-png.flaticon.com/512/5968/5968282.png" alt="Java" />
+            </div>
           </div>
+          
           <div 
+            className="courses-animate-card stagger-4 course-modern-card frontend"
             style={styles.category} 
             onClick={redirectToLogin}
             onMouseEnter={() => setIsHovered(prev => ({ ...prev, category4: true }))}
             onMouseLeave={() => setIsHovered(prev => ({ ...prev, category4: false }))}
           >
-            <div>
-              <h3 style={styles.categoryTitle}>Front-End</h3>
-              <div style={styles.tags}>
-                <span style={styles.tag}>Html</span>
-                <span style={styles.tag}>Css</span>
-                <span style={styles.tag}>Js</span>
-                <span style={styles.tag}>React</span>
-                <span style={styles.tag}>Tailwind</span>
-                <span style={styles.tag}>DSA</span>
-                <span style={styles.tag}>Communication Skills</span>
-                <span style={styles.tag}>Aptitude</span>
-                <span style={styles.tag}>Reasoning</span>
-                <span style={styles.tag}>100+Interview Question</span>
-                <span style={styles.tag}>Live Project</span>
+            <div className="course-modern-content">
+              <div className="course-title-row">
+                <span className="course-title-text">Front-End</span>
+                <img className="course-sticker-inline" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Frontend" />
+              </div>
+              <div className="course-modern-tags">
+                <span className="course-modern-tag">Html</span>
+                <span className="course-modern-tag">Css</span>
+                <span className="course-modern-tag">Js</span>
+                <span className="course-modern-tag">React</span>
+                <span className="course-modern-tag">Tailwind</span>
+                <span className="course-modern-tag">DSA</span>
+                <span className="course-modern-tag">Communication Skills</span>
+                <span className="course-modern-tag">Aptitude</span>
+                <span className="course-modern-tag">Reasoning</span>
+                <span className="course-modern-tag">100+Interview Question</span>
+                <span className="course-modern-tag">Live Project</span>
+              </div>
+              <div className="course-modern-explore-row">
+                <button className="course-modern-explore-btn">
+                  Explore Category <span className="course-modern-arrow">→</span>
+                </button>
               </div>
             </div>
-            <button style={styles.categoryButton}>Explore Category →</button>
+            <div className="course-modern-visual">
+              <div className="course-modern-halfcircle"></div>
+              <img className="course-modern-sticker" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Frontend" />
+            </div>
           </div>
+          
           <div 
+            className="courses-animate-card stagger-5 course-modern-card cpp"
             style={styles.category} 
             onClick={redirectToLogin}
             onMouseEnter={() => setIsHovered(prev => ({ ...prev, category5: true }))}
             onMouseLeave={() => setIsHovered(prev => ({ ...prev, category5: false }))}
           >
-            <div>
-              <h3 style={styles.categoryTitle}>C and C++</h3>
-              <div style={styles.tags}>
-                <span style={styles.tag}>Logic Building</span>
-                <span style={styles.tag}>500+ Programming Practice Question</span>
+            <div className="course-modern-content">
+              <div className="course-title-row">
+                <span className="course-title-text">C and C++</span>
+                <img className="course-sticker-inline" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="C++" />
+              </div>
+              <div className="course-modern-tags">
+                <span className="course-modern-tag">Logic Building</span>
+                <span className="course-modern-tag">500+ Programming Practice Question</span>
+              </div>
+              <div className="course-modern-explore-row">
+                <button className="course-modern-explore-btn">
+                  Explore Category <span className="course-modern-arrow">→</span>
+                </button>
               </div>
             </div>
-            <button style={styles.categoryButton}>Explore Category →</button>
+            <div className="course-modern-visual">
+              <div className="course-modern-halfcircle"></div>
+              <img className="course-modern-sticker" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="C++" />
+            </div>
           </div>
         </div>
       </section>
