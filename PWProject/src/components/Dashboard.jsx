@@ -1,8 +1,100 @@
 // src/pages/Dashboard.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const [isVisible, setIsVisible] = useState({
+    hero: false,
+    features: false,
+    categories: false,
+    video: false,
+    stats: false,
+    team: false,
+    resources: false,
+    clients: false,
+    collab: false
+  });
+
+  const [isHovered, setIsHovered] = useState({
+    category1: false,
+    category2: false,
+    category3: false,
+    category4: false,
+    category5: false,
+    statsCard1: false,
+    statsCard2: false,
+    statsCard3: false
+  });
+
+  // Animation trigger on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      
+      // Hero section animation
+      const heroSection = document.querySelector('[data-section="hero"]');
+      if (heroSection && scrollPosition > heroSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, hero: true }));
+      }
+
+      // Features section animation
+      const featuresSection = document.querySelector('[data-section="features"]');
+      if (featuresSection && scrollPosition > featuresSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, features: true }));
+      }
+
+      // Categories section animation
+      const categoriesSection = document.querySelector('[data-section="categories"]');
+      if (categoriesSection && scrollPosition > categoriesSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, categories: true }));
+      }
+
+      // Video section animation
+      const videoSection = document.querySelector('[data-section="video"]');
+      if (videoSection && scrollPosition > videoSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, video: true }));
+      }
+
+      // Stats section animation
+      const statsSection = document.querySelector('[data-section="stats"]');
+      if (statsSection && scrollPosition > statsSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, stats: true }));
+      }
+
+      // Team section animation
+      const teamSection = document.querySelector('[data-section="team"]');
+      if (teamSection && scrollPosition > teamSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, team: true }));
+      }
+
+      // Resources section animation
+      const resourcesSection = document.querySelector('[data-section="resources"]');
+      if (resourcesSection && scrollPosition > resourcesSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, resources: true }));
+      }
+
+      // Clients section animation
+      const clientsSection = document.querySelector('[data-section="clients"]');
+      if (clientsSection && scrollPosition > clientsSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, clients: true }));
+      }
+
+      // Collaboration section animation
+      const collabSection = document.querySelector('[data-section="collab"]');
+      if (collabSection && scrollPosition > collabSection.offsetTop + 100) {
+        setIsVisible(prev => ({ ...prev, collab: true }));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Trigger initial animations
+    setTimeout(() => {
+      setIsVisible(prev => ({ ...prev, hero: true }));
+    }, 100);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const redirectToLogin = () => {
     // Handle login redirection logic here
     window.location.href = "/login";
@@ -36,7 +128,11 @@ const Dashboard = () => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      position: 'sticky',
+      top: 0,
+      zIndex: 1000,
+      transition: 'all 0.3s ease'
     },
     logo: {
       fontWeight: 'bold',
@@ -55,7 +151,14 @@ const Dashboard = () => {
       fontWeight: 'bold',
       cursor: 'pointer',
       fontSize: '14px',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.3s ease',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-2px)',
+        boxShadow: '0 4px 12px rgba(68, 96, 241, 0.3)',
+        backgroundColor: '#4460f1',
+        color: 'white'
+      }
     },
     dropdownIcon: {
       fontSize: '12px',
@@ -67,7 +170,19 @@ const Dashboard = () => {
       color: 'white',
       border: 'none',
       borderRadius: '5px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-2px)',
+        boxShadow: '0 4px 12px rgba(108, 99, 255, 0.4)',
+        backgroundColor: '#5a52d5'
+      }
+    },
+    headerLeft: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '16px',
     },
     
     // Hero section styles
@@ -77,7 +192,11 @@ const Dashboard = () => {
       justifyContent: 'space-between',
       padding: '60px',
       background: 'linear-gradient(to right, #eef2ff, #ffffff)',
-      minHeight: '500px'
+      minHeight: '500px',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease',
+      animation: 'fadeInUp 0.8s ease forwards'
     },
     heroText: {
       maxWidth: '600px'
@@ -101,14 +220,26 @@ const Dashboard = () => {
       border: 'none',
       fontSize: '1rem',
       borderRadius: '6px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-3px)',
+        boxShadow: '0 8px 25px rgba(108, 99, 255, 0.4)',
+        backgroundColor: '#5a52d5'
+      }
     },
     heroImages: {
-      position: 'relative'
+      position: 'relative',
+      animation: 'float 3s ease-in-out infinite'
     },
     heroImage: {
       width: '150px',
-      borderRadius: '50%'
+      borderRadius: '50%',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'scale(1.05) rotate(5deg)'
+      }
     },
     
     // Features section styles
@@ -117,14 +248,27 @@ const Dashboard = () => {
       justifyContent: 'space-around',
       backgroundColor: 'white',
       padding: '60px 0',
-      boxShadow: '0 -2px 8px rgba(0,0,0,0.05)'
+      boxShadow: '0 -2px 8px rgba(0,0,0,0.05)',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     featureBox: {
-      textAlign: 'center'
+      textAlign: 'center',
+      transition: 'all 0.3s ease',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-10px)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+      }
     },
     featureImage: {
       width: '40px',
-      marginBottom: '10px'
+      marginBottom: '10px',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'scale(1.2) rotate(10deg)'
+      }
     },
     featureTitle: {
       marginBottom: '5px',
@@ -140,7 +284,10 @@ const Dashboard = () => {
     categories: {
       padding: '60px 30px',
       background: '#fff',
-      textAlign: 'center'
+      textAlign: 'center',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     categoriesTitle: {
       fontSize: '2rem',
@@ -165,13 +312,19 @@ const Dashboard = () => {
       padding: '20px',
       cursor: 'pointer',
       position: 'relative',
-      transition: 'transform 0.2s ease',
+      transition: 'all 0.3s ease',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
       textAlign: 'left',
       height: '330px',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-10px) scale(1.02)',
+        boxShadow: '0 15px 40px rgba(0,0,0,0.15)',
+        borderColor: '#6c63ff'
+      }
     },
     categoryTitle: {
       marginBottom: '15px'
@@ -199,7 +352,15 @@ const Dashboard = () => {
       borderRadius: '20px',
       fontWeight: 'bold',
       cursor: 'pointer',
-      alignSelf: 'flex-start'
+      alignSelf: 'flex-start',
+      transition: 'all 0.3s ease',
+      transform: 'translateX(0)',
+      '&:hover': {
+        transform: 'translateX(5px)',
+        backgroundColor: '#6c63ff',
+        color: 'white',
+        boxShadow: '0 4px 12px rgba(108, 99, 255, 0.3)'
+      }
     },
     
     // Video section styles
@@ -207,7 +368,10 @@ const Dashboard = () => {
       display: 'flex',
       justifyContent: 'center',
       background: '#000',
-      padding: '20px 0'
+      padding: '20px 0',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     videoContainer: {
       width: '90%',
@@ -218,23 +382,42 @@ const Dashboard = () => {
     videoIframe: {
       width: '100%',
       height: '100%',
-      borderRadius: '12px'
+      borderRadius: '12px',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'scale(1.02)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+      }
     },
     
     // Trusted platform section styles
     trustedPlatform: {
       textAlign: 'center',
-      padding: '40px 20px'
+      padding: '40px 20px',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     trustedTitle: {
       fontSize: '2rem',
       fontWeight: 'bold',
-      marginBottom: '10px'
+      marginBottom: '10px',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'scale(1.05)',
+        color: '#6c63ff',
+        textShadow: '0 2px 8px rgba(108, 99, 255, 0.3)'
+      }
     },
     trustedParagraph: {
       fontSize: '1rem',
       color: '#555',
-      marginBottom: '30px'
+      marginBottom: '30px',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        color: '#6c63ff',
+        transform: 'translateX(5px)'
+      }
     },
     statsCards: {
       display: 'flex',
@@ -251,12 +434,29 @@ const Dashboard = () => {
       boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
       position: 'relative',
       textAlign: 'center',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: 'Arial, sans-serif',
+      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+      transform: 'translateY(0) scale(1)',
+      cursor: 'pointer',
+      overflow: 'hidden',
+      '&:hover': {
+        transform: 'translateY(-15px) scale(1.05)',
+        boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
+        '& .popIcon': {
+          opacity: 1,
+          transform: 'translateY(-10px) scale(1.2)'
+        }
+      }
     },
     statsCardTitle: {
       fontSize: '40px',
       fontWeight: 'bold',
-      marginBottom: '5px'
+      marginBottom: '5px',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'scale(1.1)',
+        color: '#6c63ff'
+      }
     },
     statsCardText: {
       fontSize: '14px',
@@ -266,7 +466,31 @@ const Dashboard = () => {
       width: '50px',
       position: 'absolute',
       bottom: '10px',
-      right: '10px'
+      right: '10px',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        transform: 'rotate(360deg) scale(1.2)'
+      }
+    },
+    popIcon: {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      width: '30px',
+      height: '30px',
+      backgroundColor: '#6c63ff',
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'white',
+      fontSize: '16px',
+      fontWeight: 'bold',
+      opacity: 0,
+      transform: 'translateY(0) scale(0.8)',
+      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+      boxShadow: '0 4px 12px rgba(108, 99, 255, 0.4)',
+      zIndex: 10
     },
     getStartedBtn: {
       backgroundColor: '#5f38e9',
@@ -276,14 +500,23 @@ const Dashboard = () => {
       border: 'none',
       borderRadius: '8px',
       cursor: 'pointer',
-      transition: '0.3s'
+      transition: 'all 0.3s ease',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-3px)',
+        boxShadow: '0 8px 25px rgba(95, 56, 233, 0.4)',
+        backgroundColor: '#4a2dd8'
+      }
     },
     
     // Team section styles
     ourTeamSection: {
       padding: '50px 20px',
       backgroundColor: '#f9f9f9',
-      textAlign: 'center'
+      textAlign: 'center',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     teamTitle: {
       fontSize: '2rem',
@@ -293,29 +526,39 @@ const Dashboard = () => {
       color: '#666',
       marginBottom: '30px'
     },
-    teamGrid: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gap: '25px',
-      maxWidth: '1000px',
-      margin: 'auto',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    teamImage: {
-      width: '100%',
-      maxWidth: '200px',
-      objectFit: 'contain',
-      borderRadius: '10px',
-      filter: 'grayscale(100%)',
-      transition: 'all 0.3s ease'
-    },
+         teamGrid: {
+       display: 'flex',
+       gap: '20px',
+       maxWidth: '100%',
+       margin: 'auto',
+       position: 'relative',
+       animation: 'marquee 20s linear infinite',
+     },
+         teamImage: {
+       width: '200px',
+       height: '200px',
+       objectFit: 'cover',
+       borderRadius: '10px',
+       filter: 'grayscale(100%)',
+       transition: 'all 0.3s ease',
+       transform: 'scale(1)',
+       margin: '0 15px',
+       flexShrink: 0,
+       '&:hover': {
+         transform: 'scale(1.1)',
+         filter: 'grayscale(0%)',
+         boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+       }
+     },
     
     // Web dev resources section styles
     sectionTitle: {
       textAlign: 'center',
       padding: '60px 20px 40px',
-      background: '#f8f9fa'
+      background: '#f8f9fa',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     sectionTitleH1: {
       fontSize: '2.5rem',
@@ -338,8 +581,13 @@ const Dashboard = () => {
       padding: '20px',
       width: '300px',
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-      transition: 'transform 0.3s ease',
-      textAlign: 'center'
+      transition: 'all 0.3s ease',
+      textAlign: 'center',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-10px) scale(1.02)',
+        boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)'
+      }
     },
     resourceCardTitle: {
       fontSize: '1.5rem',
@@ -362,7 +610,14 @@ const Dashboard = () => {
       padding: '8px 16px',
       borderRadius: '5px',
       textDecoration: 'none',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      transition: 'all 0.3s ease',
+      transform: 'translateX(0)',
+      '&:hover': {
+        transform: 'translateX(5px)',
+        backgroundColor: '#333',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+      }
     },
     card1: {
       backgroundColor: '#e6f4ff'
@@ -378,7 +633,10 @@ const Dashboard = () => {
     clientsSection: {
       padding: '60px 20px',
       textAlign: 'center',
-      background: '#f5f8ff'
+      background: '#f5f8ff',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     clientsTitle: {
       fontSize: '2.5rem',
@@ -402,7 +660,13 @@ const Dashboard = () => {
       borderRadius: '15px',
       transition: 'all 0.3s ease',
       boxShadow: '0 5px 12px rgba(0, 0, 0, 0.05)',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-8px)',
+        boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
+        backgroundColor: '#d4e4ff'
+      }
     },
     clientBoxTitle: {
       fontSize: '1.1rem',
@@ -420,7 +684,10 @@ const Dashboard = () => {
     collabSection: {
       padding: '60px 20px',
       textAlign: 'center',
-      background: '#fff'
+      background: '#fff',
+      opacity: 0,
+      transform: 'translateY(30px)',
+      transition: 'all 0.8s ease'
     },
     collabTitle: {
       fontSize: '2.5rem',
@@ -445,7 +712,13 @@ const Dashboard = () => {
       transition: 'all 0.3s ease',
       boxShadow: '0 5px 12px rgba(0,0,0,0.05)',
       cursor: 'pointer',
-      position: 'relative'
+      position: 'relative',
+      transform: 'translateY(0)',
+      '&:hover': {
+        transform: 'translateY(-8px)',
+        boxShadow: '0 15px 40px rgba(0,0,0,0.15)',
+        backgroundColor: '#d4e4fe'
+      }
     },
     collabCardTitle: {
       fontSize: '1.1rem',
@@ -457,19 +730,135 @@ const Dashboard = () => {
       marginTop: '5px',
       color: '#555',
       fontSize: '0.85rem'
-    }
+    },
+    marqueeContainer: {
+      width: '100%',
+      overflow: 'hidden',
+      position: 'relative',
+      margin: '0 auto',
+      background: '#000',
+      padding: '20px 0',
+    },
   };
+
+  // Add CSS keyframes for animations
+  const keyframes = `
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0,0,0);
+      }
+      40%, 43% {
+        transform: translate3d(0, -30px, 0);
+      }
+      70% {
+        transform: translate3d(0, -15px, 0);
+      }
+      90% {
+        transform: translate3d(0, -4px, 0);
+      }
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+         @keyframes popIn {
+       0% {
+         opacity: 0;
+         transform: scale(0.3) translateY(-50px);
+       }
+       50% {
+         opacity: 1;
+         transform: scale(1.1) translateY(-10px);
+       }
+       100% {
+         opacity: 1;
+         transform: scale(1) translateY(-10px);
+       }
+     }
+     
+     @keyframes marquee {
+       0% {
+         transform: translateX(100%);
+       }
+       100% {
+         transform: translateX(-100%);
+       }
+     }
+  `;
 
   return (
     <div style={styles.global}>
+      <style>{keyframes}</style>
       <header style={styles.header}>
-        <div style={styles.logo}>CodeCanvas</div>
-        <nav style={styles.nav}>
+        <div style={styles.headerLeft}>
+          <div style={styles.logo}>CodeCanvas</div>
           <button style={styles.allCoursesBtn} onClick={scrollToCourses}>
             All Courses
             <span style={styles.dropdownIcon}>▼</span>
           </button>
-        </nav>
+        </div>
         <button
           style={styles.loginBtn}
           onClick={() => (window.location.href = "/login")}
@@ -478,7 +867,14 @@ const Dashboard = () => {
         </button>
       </header>
 
-      <section style={styles.hero}>
+      <section 
+        style={{
+          ...styles.hero,
+          opacity: isVisible.hero ? 1 : 0,
+          transform: isVisible.hero ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="hero"
+      >
         <div style={styles.heroText}>
           <h1 style={styles.heroTitle}>
             India's <span style={styles.highlight}>Trusted & Affordable</span>
@@ -496,7 +892,14 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section style={styles.features}>
+      <section 
+        style={{
+          ...styles.features,
+          opacity: isVisible.features ? 1 : 0,
+          transform: isVisible.features ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="features"
+      >
         <div style={styles.featureBox}>
           <img
             src="https://cdn-icons-png.flaticon.com/512/747/747310.png"
@@ -526,14 +929,27 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section id="courses-section" style={styles.categories}>
+      <section 
+        id="courses-section" 
+        style={{
+          ...styles.categories,
+          opacity: isVisible.categories ? 1 : 0,
+          transform: isVisible.categories ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="categories"
+      >
         <h2 style={styles.categoriesTitle}>Our Courses</h2>
         <p style={styles.categoriesParagraph}>
-          PW is preparing students for 35+ exam categories. Scroll down to find
+          CodeCanvs is preparing students for 35+ exam categories. Scroll down to find
           the one you are preparing for
         </p>
         <div style={styles.categoryGrid}>
-          <div style={styles.category} onClick={redirectToLogin}>
+          <div 
+            style={styles.category} 
+            onClick={redirectToLogin}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, category1: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, category1: false }))}
+          >
             <div>
               <h3 style={styles.categoryTitle}>MERN FULL STACK</h3>
               <div style={styles.tags}>
@@ -556,7 +972,12 @@ const Dashboard = () => {
             </div>
             <button style={styles.categoryButton}>Explore Category →</button>
           </div>
-          <div style={styles.category} onClick={redirectToLogin}>
+          <div 
+            style={styles.category} 
+            onClick={redirectToLogin}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, category2: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, category2: false }))}
+          >
             <div>
               <h3 style={styles.categoryTitle}>Python Full Stack</h3>
               <div style={styles.tags}>
@@ -578,7 +999,12 @@ const Dashboard = () => {
             </div>
             <button style={styles.categoryButton}>Explore Category →</button>
           </div>
-          <div style={styles.category} onClick={redirectToLogin}>
+          <div 
+            style={styles.category} 
+            onClick={redirectToLogin}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, category3: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, category3: false }))}
+          >
             <div>
               <h3 style={styles.categoryTitle}>Java Full Stack</h3>
               <div style={styles.tags}>
@@ -600,7 +1026,12 @@ const Dashboard = () => {
             </div>
             <button style={styles.categoryButton}>Explore Category →</button>
           </div>
-          <div style={styles.category} onClick={redirectToLogin}>
+          <div 
+            style={styles.category} 
+            onClick={redirectToLogin}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, category4: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, category4: false }))}
+          >
             <div>
               <h3 style={styles.categoryTitle}>Front-End</h3>
               <div style={styles.tags}>
@@ -619,7 +1050,12 @@ const Dashboard = () => {
             </div>
             <button style={styles.categoryButton}>Explore Category →</button>
           </div>
-          <div style={styles.category} onClick={redirectToLogin}>
+          <div 
+            style={styles.category} 
+            onClick={redirectToLogin}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, category5: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, category5: false }))}
+          >
             <div>
               <h3 style={styles.categoryTitle}>C and C++</h3>
               <div style={styles.tags}>
@@ -632,7 +1068,14 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section style={styles.promoVideo}>
+      <section 
+        style={{
+          ...styles.promoVideo,
+          opacity: isVisible.video ? 1 : 0,
+          transform: isVisible.video ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="video"
+      >
         <div style={styles.videoContainer}>
           <iframe
             height="504"
@@ -647,7 +1090,14 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section style={styles.trustedPlatform}>
+      <section 
+        style={{
+          ...styles.trustedPlatform,
+          opacity: isVisible.stats ? 1 : 0,
+          transform: isVisible.stats ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="stats"
+      >
         <h2 style={styles.trustedTitle}>A Platform Trusted by Students</h2>
         <p style={styles.trustedParagraph}>
           Physics Wallah aims to transform not just through words, but provide
@@ -655,43 +1105,121 @@ const Dashboard = () => {
         </p>
 
         <div style={styles.statsCards}>
-          <div style={{...styles.statsCard, backgroundColor: "#fff2dc"}}>
+          <div 
+            style={{...styles.statsCard, backgroundColor: "#fff2dc"}}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, statsCard1: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, statsCard1: false }))}
+          >
             <h3 style={styles.statsCardTitle}>1Million+</h3>
             <p style={styles.statsCardText}>Happy Students</p>
+            <div 
+              style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
+                width: '50px',
+                height: '50px',
+                backgroundColor: '#ffd700',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                transition: 'all 0.3s ease',
+                transform: isHovered.statsCard1 ? 'rotate(360deg) scale(1.2)' : 'rotate(0deg) scale(1)'
+              }}
+            >
+              🎓
+            </div>
           </div>
-          <div style={{...styles.statsCard, backgroundColor: "#ffefef"}}>
+          
+          <div 
+            style={{...styles.statsCard, backgroundColor: "#ffefef"}}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, statsCard2: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, statsCard2: false }))}
+          >
             <h3 style={styles.statsCardTitle}>500+</h3>
             <p style={styles.statsCardText}>Interview Passsed</p>
             <img
               src="https://cdn-icons-png.flaticon.com/512/2900/2900664.png"
               alt="Mock Test"
-              style={styles.statsCardImage}
+              style={{
+                ...styles.statsCardImage,
+                transform: isHovered.statsCard2 ? 'rotate(360deg) scale(1.2)' : 'rotate(0deg) scale(1)'
+              }}
             />
           </div>
-          <div style={{...styles.statsCard, backgroundColor: "#e6f7ff"}}>
+          
+          <div 
+            style={{...styles.statsCard, backgroundColor: "#e6f7ff"}}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, statsCard3: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, statsCard3: false }))}
+          >
             <h3 style={styles.statsCardTitle}>15000+</h3>
             <p style={styles.statsCardText}>Video Lectures</p>
+            <div 
+              style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
+                width: '50px',
+                height: '50px',
+                backgroundColor: '#87ceeb',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                transition: 'all 0.3s ease',
+                transform: isHovered.statsCard3 ? 'rotate(360deg) scale(1.2)' : 'rotate(0deg) scale(1)'
+              }}
+            >
+              📹
+            </div>
           </div>
         </div>
         <a href="/login"><button style={styles.getStartedBtn}>Get Started</button></a>
         
       </section>
 
-      <section style={styles.ourTeamSection}>
-        <h2 style={styles.teamTitle}>Our Team</h2>
+      <section 
+        style={{
+          ...styles.ourTeamSection,
+          opacity: isVisible.team ? 1 : 0,
+          transform: isVisible.team ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="team"
+      >
+        <h2 style={styles.teamTitle}>Academic Excellence : Results</h2>
         <p style={styles.teamParagraph}>Meet the passionate developers behind our Web Dev CCG initiative</p>
 
-        <div style={styles.teamGrid}>
-          <img src="data:image/jpeg;base64," alt="Team Member 1" style={styles.teamImage} />
-          <img src="team2.jpg" alt="Team Member 2" style={styles.teamImage} />
-          <img src="team3.jpg" alt="Team Member 3" style={styles.teamImage} />
-          <img src="team4.jpg" alt="Team Member 4" style={styles.teamImage} />
-          <img src="team5.jpg" alt="Team Member 5" style={styles.teamImage} />
-          <img src="team6.jpg" alt="Team Member 6" style={styles.teamImage} />
+        <div style={styles.marqueeContainer}>
+          <div style={styles.teamGrid}>
+            <img src="https://surl.li/mkarzx" alt="Team Member 1" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 2" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 3" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 4" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 5" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 6" style={styles.teamImage} />
+            {/* Duplicate set for seamless marquee */}
+            <img src="https://surl.li/mkarzx" alt="Team Member 1" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 2" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 3" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 4" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 5" style={styles.teamImage} />
+            <img src="https://surl.li/mkarzx" alt="Team Member 6" style={styles.teamImage} />
+          </div>
         </div>
       </section>
 
-      <section style={styles.sectionTitle}>
+      <section 
+        style={{
+          ...styles.sectionTitle,
+          opacity: isVisible.resources ? 1 : 0,
+          transform: isVisible.resources ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="resources"
+      >
         <h1 style={styles.sectionTitleH1}>Web Dev Resources</h1>
         <p style={styles.sectionTitleP}>
           A curated list of resources to master front-end development with CCG
@@ -748,7 +1276,14 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section style={styles.clientsSection}>
+      <section 
+        style={{
+          ...styles.clientsSection,
+          opacity: isVisible.clients ? 1 : 0,
+          transform: isVisible.clients ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="clients"
+      >
         <h2 style={styles.clientsTitle}>Our Clients</h2>
         <p style={styles.clientsParagraph}>Empowering global businesses with our digital solutions</p>
 
@@ -764,7 +1299,14 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <section style={styles.collabSection}>
+      <section 
+        style={{
+          ...styles.collabSection,
+          opacity: isVisible.collab ? 1 : 0,
+          transform: isVisible.collab ? 'translateY(0)' : 'translateY(30px)'
+        }}
+        data-section="collab"
+      >
         <h2 style={styles.collabTitle}>Our Collaboration</h2>
         <p style={styles.collabParagraph}>
           Trusted by top organizations, startups, and institutions across India
