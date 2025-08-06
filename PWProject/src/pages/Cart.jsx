@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { FaArrowLeft, FaTrash } from "react-icons/fa";
 import Header from "../components/Header";
 
 const Cart = () => {
   const navigate = useNavigate();
   const { category, courseName } = useParams();
+  const location = useLocation();
 
   const [cartItems, setCartItems] = useState([]);
+  
+  // Extract query parameters for dynamic pricing
+  const queryParams = new URLSearchParams(location.search);
+  const courseType = queryParams.get('courseType') || 'batch';
+  const dynamicPrice = queryParams.get('price');
+  
+  // Plan type display names
+  const planTypeNames = {
+    batch: 'Batch',
+    infinity: 'Infinity',
+    infinityPro: 'Infinity Pro'
+  };
 
   // Course data mapping
   const courseDataMap = {
@@ -89,17 +102,26 @@ const Cart = () => {
     },
   };
 
-  // Load course data based on URL parameters
+  // Load course data based on URL parameters with dynamic pricing
   useEffect(() => {
     if (category && courseName) {
       const decodedCourseName = decodeURIComponent(courseName);
-      const courseData = courseDataMap[category]?.[decodedCourseName];
-
-      if (courseData) {
+      const staticCourseData = courseDataMap[category]?.[decodedCourseName];
+      
+      if (staticCourseData) {
+        // Use dynamic price if available, otherwise fall back to static price
+        const finalPrice = dynamicPrice ? parseInt(dynamicPrice) : staticCourseData.price;
+        const planTypeName = planTypeNames[courseType] || 'Batch';
+        
         setCartItems([
           {
             id: 1,
-            ...courseData,
+            ...staticCourseData,
+            price: finalPrice,
+            planType: planTypeName,
+            courseType: courseType,
+            // Keep original price for display purposes
+            originalPrice: staticCourseData.originalPrice,
           },
         ]);
       }
@@ -111,13 +133,15 @@ const Cart = () => {
           name: "Python Full Stack",
           image:
             "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=300&h=200&fit=crop",
-          price: 45000,
+          price: 5500, // Default batch price
           originalPrice: 50000,
           category: "Web Development",
+          planType: "Batch",
+          courseType: "batch",
         },
       ]);
     }
-  }, [category, courseName]);
+  }, [category, courseName, dynamicPrice, courseType]);
 
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null);

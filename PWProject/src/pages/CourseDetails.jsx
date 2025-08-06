@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { courseData, courseDetails } from "./WebDevelopment";
 import Header from "../components/Header";
@@ -18,11 +18,59 @@ const otherDetails = [
 const CourseDetails = () => {
   const { courseName } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const decodedCourseName = decodeURIComponent(courseName);
   const details = courseDetails[decodedCourseName];
   const topics = courseData[decodedCourseName] || [];
   const [selectedTopic, setSelectedTopic] = useState(0);
   const [activeTab, setActiveTab] = useState("Description");
+
+  // Extract query parameters for dynamic pricing
+  const queryParams = new URLSearchParams(location.search);
+  const courseType = queryParams.get('courseType') || 'batch';
+  const dynamicPrice = queryParams.get('price');
+  
+  // Dynamic pricing structure (same as WebDevelopment.jsx)
+  const coursePricing = {
+    "Python Full Stack": {
+      batch: 5500,
+      infinity: 10500,
+      infinityPro: 18500
+    },
+    "Java Full Stack": {
+      batch: 5500,
+      infinity: 10500,
+      infinityPro: 18500
+    },
+    "Front-End": {
+      batch: 3000,
+      infinity: 3000,
+      infinityPro: 3000
+    },
+    "MERN Full Stack": {
+      batch: 5500,
+      infinity: 10500,
+      infinityPro: 18500
+    }
+  };
+  
+  // Plan type display names
+  const planTypeNames = {
+    batch: 'Batch',
+    infinity: 'Infinity',
+    infinityPro: 'Infinity Pro'
+  };
+  
+  // Get dynamic price based on course and plan type
+  const getCurrentPrice = () => {
+    if (dynamicPrice) {
+      return parseInt(dynamicPrice);
+    }
+    return coursePricing[decodedCourseName]?.[courseType] || coursePricing[decodedCourseName]?.batch || 5500;
+  };
+  
+  const currentPrice = getCurrentPrice();
+  const planTypeName = planTypeNames[courseType] || 'Batch';
 
   if (!details) {
     return <div style={{ padding: 32 }}>Course not found.</div>;
@@ -30,7 +78,7 @@ const CourseDetails = () => {
 
   const handleBuyNow = () => {
     const encodedCourseName = encodeURIComponent(decodedCourseName);
-    navigate(`/cart/web-development/${encodedCourseName}`);
+    navigate(`/cart/web-development/${encodedCourseName}?courseType=${courseType}&price=${currentPrice}`);
   };
 
   return (
@@ -283,14 +331,17 @@ const CourseDetails = () => {
               <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 8 }}>
                 {decodedCourseName}
               </div>
-              <div style={{ color: "#555", fontSize: 15, marginBottom: 12 }}>
+              <div style={{ color: "#555", fontSize: 15, marginBottom: 8 }}>
                 {details.description}
+              </div>
+              <div style={{ color: "#2563eb", fontSize: 14, fontWeight: 600, marginBottom: 12 }}>
+                Selected Plan: {planTypeName}
               </div>
               <div style={{ marginBottom: 12 }}>
                 <span
                   style={{ fontSize: 22, fontWeight: 700, color: "#2563eb" }}
                 >
-                  {details.price}
+                  ₹{currentPrice.toLocaleString()}
                 </span>
                 <span
                   style={{
